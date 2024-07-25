@@ -28,7 +28,7 @@ const NoteCard = ({ note }) => {
           defaultValue={body}
         ></textarea>
       </div>
-      {body}
+   
     </div>
   );
 };
