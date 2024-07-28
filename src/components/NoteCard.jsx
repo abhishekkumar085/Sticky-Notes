@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Trash from '../Icons/Trash';
-import { newOffset, autoGrow, setZIndex } from '../Utils/utils';
+import { newOffset, autoGrow, setZIndex, bodyParser } from '../Utils/utils';
 
 const NoteCard = ({ note }) => {
-  const body = JSON.parse(note.body);
+  const body = bodyParser(note.body);
   const colors = JSON.parse(note.colors);
   const textAreaRef = useRef(null);
   const [position, setPosition] = useState(JSON.parse(note.position));
@@ -82,8 +82,10 @@ const NoteCard = ({ note }) => {
           style={{ color: colors.colorText }}
           defaultValue={body}
           onInput={() => {
-            setZIndex(cardRef.current)
             autoGrow(textAreaRef);
+          }}
+          onFocus={() => {
+            setZIndex(cardRef.current);
           }}
         ></textarea>
       </div>
