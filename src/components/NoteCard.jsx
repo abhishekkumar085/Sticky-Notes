@@ -1,17 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Trash from '../Icons/Trash';
 import { newOffset, autoGrow, setZIndex, bodyParser } from '../Utils/utils';
+import { db } from '../AppWrite/databases';
+import Spinner from '../Icons/Spinner';
 
 const NoteCard = ({ note }) => {
   const body = bodyParser(note.body);
   const colors = JSON.parse(note.colors);
   const textAreaRef = useRef(null);
   const [position, setPosition] = useState(JSON.parse(note.position));
+  const [saving, setSaving] = useState(false);
+
+  const keyUpTimer = useRef(null);
+
+  const handleKeyUp = async () => {
+    // first initiate saving
+
+    setSaving(true);
+
+    // if we have a timer id, clear it so we can add another two seconds
+
+    if (keyUpTimer.current) {
+      clearTimeout(keyUpTimer.current);
+    }
+
+    // Set timer to trigger save in 2 seconds
+
+    keyUpTimer.current = setTimeout(() => {
+      saveData('body', textAreaRef.current.value);
+    }, 2000);
+  };
 
   useEffect(() => {
     autoGrow(textAreaRef);
   }, []);
-
+  const saveData = async (key, value) => {
+    const payload = { [key]: JSON.stringify(value) };
+    try {
+      await db.notes.update(note.$id, payload);
+    } catch (error) {
+      console.error(error);
+    }
+    setSaving(false);
+  };
   let mouseStartPos = { x: 0, y: 0 };
   const cardRef = useRef(null);
 
@@ -48,6 +79,9 @@ const NoteCard = ({ note }) => {
   const mouseUp = () => {
     document.removeEventListener('mousemove', mouseMove);
     document.removeEventListener('mouseup', mouseUp);
+
+    const newPosition = newOffset(cardRef.current); //{x,y}
+    saveData('position', newPosition);
   };
   const mouseDown = (e) => {
     setZIndex(cardRef.current);
@@ -72,10 +106,17 @@ const NoteCard = ({ note }) => {
         style={{ backgroundColor: colors.colorHeader }}
         onMouseDown={mouseDown}
       >
+        {saving && (
+          <div className="card-saving">
+            <Spinner color={colors.colorText} />
+            <span style={{ color: colors.colorText }}>Saving...</span>
+          </div>
+        )}
         <Trash />
       </div>
       <div className="card-body">
         <textarea
+          onKeyUp={handleKeyUp}
           ref={textAreaRef}
           name=""
           id=""
