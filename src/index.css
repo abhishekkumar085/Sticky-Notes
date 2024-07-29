@@ -94,9 +94,9 @@ textarea:focus {
   padding: 1em 1em;
   border-radius: 40px;
 
-  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% /
-                  0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg
-                  0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
   z-index: 10000;
 }
 
@@ -129,4 +129,22 @@ textarea:focus {
 .color:hover {
   height: 45px;
   width: 45px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  background: rgb(236, 235, 156);
+  width: 100%;
+  height: 4rem;
+}
+.footer-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-text > p {
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: rgb(249, 51, 16);
 }

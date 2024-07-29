@@ -1,8 +1,26 @@
 # React + Vite
+# Sticky Notes App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a sticky notes application where users can add notes, change note colors, and drag-and-drop notes to any position on the screen. The positions of the notes are saved to a database. The application is built with React for the frontend and Appwrite for the backend.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add new sticky notes
+- Change the color of each note
+- Drag and drop notes to rearrange them
+- Save the position of each note in the database
+- User can delete thier notes
+
+## Tech Stack
+
+- **Frontend**: React
+- **Backend**: Appwrite
+
+## Installation
+
+## Images
+![img1](image.png)
+![img2](image-1.png)
+![img3](image-2.png)
+![img4](image-3.png)
+
