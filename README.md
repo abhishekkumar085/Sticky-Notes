@@ -1,8 +1,9 @@
-
-
 ## Note Flex App
-- [Go Live](https://noteflex.vercel.app/)
+
+- [Go Live](https://mystickynotes.vercel.app/)
+
 # Sticky Notes App
+
 This is a sticky notes application where users can add notes, change note colors, and drag-and-drop notes to any position on the screen. The positions of the notes are saved to a database. The application is built with React for the frontend and Appwrite for the backend.
 
 ## Features
