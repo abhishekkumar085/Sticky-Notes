@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-text">
-        <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} NoteFlex.All rights reserved.</p>
       </div>
     </div>
   );
