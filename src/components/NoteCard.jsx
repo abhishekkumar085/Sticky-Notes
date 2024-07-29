@@ -3,8 +3,9 @@ import Trash from '../Icons/Trash';
 import { newOffset, autoGrow, setZIndex, bodyParser } from '../Utils/utils';
 import { db } from '../AppWrite/databases';
 import Spinner from '../Icons/Spinner';
+import DeleteButton from './DeleteButton';
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, setNotes }) => {
   const body = bodyParser(note.body);
   const colors = JSON.parse(note.colors);
   const textAreaRef = useRef(null);
@@ -84,12 +85,14 @@ const NoteCard = ({ note }) => {
     saveData('position', newPosition);
   };
   const mouseDown = (e) => {
-    setZIndex(cardRef.current);
-    mouseStartPos.x = e.clientX;
-    mouseStartPos.y = e.clientY;
+    if (e.target.className === 'card-header') {
+      setZIndex(cardRef.current);
+      mouseStartPos.x = e.clientX;
+      mouseStartPos.y = e.clientY;
 
-    document.addEventListener('mousemove', mouseMove);
-    document.addEventListener('mouseup', mouseUp);
+      document.addEventListener('mousemove', mouseMove);
+      document.addEventListener('mouseup', mouseUp);
+    }
   };
   return (
     <div
@@ -112,7 +115,7 @@ const NoteCard = ({ note }) => {
             <span style={{ color: colors.colorText }}>Saving...</span>
           </div>
         )}
-        <Trash />
+        <DeleteButton noteId={note.$id} setNotes={setNotes} />
       </div>
       <div className="card-body">
         <textarea
