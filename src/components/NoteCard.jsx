@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Trash from '../Icons/Trash';
 import { newOffset, autoGrow, setZIndex, bodyParser } from '../Utils/utils';
 import { db } from '../AppWrite/databases';
 import Spinner from '../Icons/Spinner';
 import DeleteButton from './DeleteButton';
+import { NoteContext } from '../Context/NoteContext';
 
 const NoteCard = ({ note, setNotes }) => {
   const body = bodyParser(note.body);
@@ -11,7 +12,7 @@ const NoteCard = ({ note, setNotes }) => {
   const textAreaRef = useRef(null);
   const [position, setPosition] = useState(JSON.parse(note.position));
   const [saving, setSaving] = useState(false);
-
+  const { setSelectedNote } = useContext(NoteContext);
   const keyUpTimer = useRef(null);
 
   const handleKeyUp = async () => {
@@ -34,6 +35,7 @@ const NoteCard = ({ note, setNotes }) => {
 
   useEffect(() => {
     autoGrow(textAreaRef);
+    setZIndex(cardRef.current);
   }, []);
   const saveData = async (key, value) => {
     const payload = { [key]: JSON.stringify(value) };
@@ -87,6 +89,7 @@ const NoteCard = ({ note, setNotes }) => {
   const mouseDown = (e) => {
     if (e.target.className === 'card-header') {
       setZIndex(cardRef.current);
+      setSelectedNote(note);
       mouseStartPos.x = e.clientX;
       mouseStartPos.y = e.clientY;
 
@@ -127,6 +130,7 @@ const NoteCard = ({ note, setNotes }) => {
           defaultValue={body}
           onInput={() => {
             autoGrow(textAreaRef);
+            setSelectedNote(note);
           }}
           onFocus={() => {
             setZIndex(cardRef.current);
